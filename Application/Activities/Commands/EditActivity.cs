@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.Design;
 using Application.Activities.Queries;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Persistence;
@@ -13,7 +14,7 @@ public class Command : IRequest
 {
     public required Activity Activity { get; set; }
 
-        public class Handler(AppDBContext context) : IRequestHandler<Command>
+        public class Handler(AppDBContext context, IMapper mapper) : IRequestHandler<Command>
         {
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
@@ -21,7 +22,7 @@ public class Command : IRequest
                     .FindAsync([request.Activity.Id], cancellationToken) 
                         ?? throw new Exception("Cannot find activity");
 
-                    activity.Title = request.Activity.Title;
+                    mapper.Map(request.Activity, activity);
 
                     await context.SaveChangesAsync(cancellationToken);
             }
