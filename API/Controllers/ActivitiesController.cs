@@ -21,7 +21,7 @@ public class ActivitiesController : BaseAPIController
     {
         return await Mediator.Send(new GetActivityDetails.Query { Id = id });
     }
-    
+
     [HttpPost]
     public async Task<ActionResult<string>> CreateActivity(Activity activity)
     {
@@ -31,9 +31,16 @@ public class ActivitiesController : BaseAPIController
     [HttpPut]
     public async Task<ActionResult> EditActivity(Activity activity)
     {
-        await Mediator.Send(new EditActivity.Command { Activity = activity});
+        await Mediator.Send(new EditActivity.Command { Activity = activity });
 
         return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> DeleteActivity(string id)
+    {
+        await Mediator.Send(new DeleteActivity.Command { Id = id });
+        return Ok();
     }
 
 }
