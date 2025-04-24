@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import ActivityList from "./ActivityList";
-import ActivityDetails from "../details/activitydetails";
+import ActivityDetails from "../details/ActivityDetails";
 
 type Props = {
     activities: Activity[]
